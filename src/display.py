@@ -46,15 +46,7 @@ class Display(object):
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glColor3f(*Display.defaultColor)
     glLoadIdentity()
-   
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
-
-    # Degree of FOV, width / height ratio, min dist, max dist
-    gluPerspective(60, float(self.width) / self.height, 0.2, 1000)
-    glMatrixMode(GL_MODELVIEW)
-    #gluLookAt(1, 1, .6, 0, 0, 0, 0, 0, 1)
-
+    
   def postGL(self):
     glutSwapBuffers()
     time.sleep(0.042)
@@ -66,13 +58,29 @@ class Display(object):
     pass
 
   def keyboard(self, key, x, y):
-    self.oculus.calibrate()
+    if(key == " "):
+      self.oculus.calibrate()
+    elif(key == "p"):
+      print self.pos
+    elif(key == "o"):
+      print self.oculus.getOrientation()
+    elif(key == "z"):
+      oculus.Oculus.eyeDx -= 0.001
+    elif(key == "x"):
+      oculus.Oculus.eyeDx += 0.001
+
+    scale = 0.05
+    (x, y, z) = self.pos
+    x += scale*(key == "w") - scale*(key == "s")
+    y += scale*(key == "a") - scale*(key == "d")
+    z += scale*(key == "q") - scale*(key == "e") 
+    self.pos = (x, y, z)
 
   def specialKeys(self, key, x, y):
     pass
 
   def draw(self):
-    self.pos = (0, 0, 0)
+    glColor3f(0, 1, 0)
     glutWireCube(0.1)
 
   def drawWrapper(self):
