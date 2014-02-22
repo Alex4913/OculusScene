@@ -76,6 +76,8 @@ class Display(object):
     z += scale*(key == "q") - scale*(key == "e") 
     self.pos = (x, y, z)
 
+    self.oculus.scale += scale*(key == "n") - scale*(key == "m") 
+
   def specialKeys(self, key, x, y):
     pass
 

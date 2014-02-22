@@ -14,6 +14,8 @@ class Oculus(object):
     self.height = height
     self.calibPoint = (0, 0, 0)
 
+    self.scale = 1
+
   def calibrate(self):
     self.calibPoint = pyrift.get_orientation()
 
@@ -48,7 +50,7 @@ class Oculus(object):
     # Do translations for correct Oculus Viewing
     glRotatef(-(pitch * 360) / (2 * math.pi), 1, 0, 0)
     glRotatef(-(yaw * 360) / (2 * math.pi), 0, 1, 0)
-    glRotatef((roll * 360) / (2 * math.pi), 0, 0, 1)
+    glRotatef(self.scale*(roll * 360) / (2 * math.pi), 0, 0, 1)
     lookX = math.cos(yaw) + x
     lookY = math.sin(yaw) + y
     offsetX = Oculus.eyeDx * math.cos((math.pi / 2) - yaw)
@@ -71,7 +73,7 @@ class Oculus(object):
     # Do translations for correct Oculus Viewing
     glRotatef(-(pitch * 360) / (2 * math.pi), 1, 0, 0)
     glRotatef(-(yaw * 360) / (2 * math.pi), 0, 1, 0)
-    glRotatef((roll * 360) / (2 * math.pi), 0, 0, 1)
+    glRotatef(self.scale*(roll * 360) / (2 * math.pi), 0, 0, 1)
     lookX = math.cos(yaw) + x
     lookY = math.sin(yaw) + y
     offsetX = -Oculus.eyeDx * math.cos((math.pi / 2) - yaw)
